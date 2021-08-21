@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- react.js react-dom.js babel.js -->
+    <script src="https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const {useEffect, useState} = React;
+
+        function App() {
+            const [count, setC] = useState(1);
+            const [count2, setC2] = useState(1);
+            
+            // useEffect如果参数二不存在，则每次组件渲染都会执行
+            useEffect(() => {
+                console.log("代码执行了");
+            });
+
+            // 若参数二是空数组，则只有初始化时执行一次
+            useEffect(() => {
+                console.log('组件初始化时只更新一次');
+                return () => {
+                    console.log("组件销毁时执行");
+                }
+            }, [])
+
+            // 参数二存在的情况
+            useEffect(() => {
+                console.log('count变了')
+            }, [count])
+
+            return (
+                <>
+                    <h1>我是一个组件：{count}</h1>
+                    <button onClick={()=>setC(count+1)}>改变</button>
+                    <hr />
+
+                    <h1>count2的值是：{count2}</h1>
+                    <button onClick={() => setC2(count2+1)}>改变</button>
+
+                </>
+            )
+        }
+
+        ReactDOM.render(<App />, document.getElementById("root"))
+    </script>
+</body>
+</html>
